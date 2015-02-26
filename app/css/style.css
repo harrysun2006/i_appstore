@@ -1,0 +1,45 @@
+.error {
+	color: #ff0000;
+}
+
+.unknown {
+	color: #000000;
+}
+
+.normal {
+	color: #00ff00;
+}
+
+.high {
+	color: #ff0000;
+}
+
+.main {
+	max-width: 360px;
+	padding: 20px;
+	margin: 0px auto 20px;
+	background-color: #FFF;
+	border: 1px solid #E5E5E5;
+	border-radius: 5px;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.noframe {
+	width: 520px;
+}
+
+.small-dialog extends .model-dialog {
+}
+
+.small-dialog .modal-dialog {
+	width: 580px;
+}
+
+.main div, .noframe div {
+	padding-bottom: 12px;
+}
+
+.main .title, .noframe .title {
+	margin-bottom: 10px;
+	text-align: center;
+}

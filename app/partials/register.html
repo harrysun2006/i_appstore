@@ -1,0 +1,34 @@
+<div class="col-xs-pull-4 col-xs-push-4 col-sm-4">
+	<form name="registerForm" class="main">
+		<h2 class="title">Register</h2>
+    <div class="input-group">
+    	<span class="input-group-addon">
+				<i class="fa fa-user"></i>
+			</span>
+      <input type="text" class="form-control" placeholder="Username" ng-model="user.username" required/>
+    </div>
+    <div class="input-group">
+    	<span class="input-group-addon">
+				<i class="fa fa-user"></i>
+			</span>
+      <input type="text" class="form-control" placeholder="Fullname" ng-model="user.fullname" required/>
+    </div>
+    <div class="input-group">
+    	<span class="input-group-addon">
+				<i class="fa fa-lock"></i>
+			</span>
+      <input type="password" class="form-control" placeholder="Password" ng-model="user.password1" required/>
+    </div>
+    <div class="input-group">
+    	<span class="input-group-addon">
+				<i class="fa fa-lock"></i>
+			</span>
+      <input type="password" class="form-control" placeholder="Password Confirm" ng-model="user.password2" required/>
+    </div>
+    <div class="error" ng-if="error">{{error}}</div>
+    <div>
+      <button type="submit" class="btn btn-large btn-primary btn-block" ng-click="register(user)">Register</button>
+    </div>
+	</form>
+  
+</div>
