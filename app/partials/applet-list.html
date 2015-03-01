@@ -1,68 +1,140 @@
-<div class="container">
-  <div id="addAppletDiv" class="hide">
-		<form id="addApplet" class="form-horizontal" role="form">
-			<h2 class="title">Add a new widget</h2>
-		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="group">Group:</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="group" placeholder="Group" ng-model="newApplet.group" required>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="name">Display Name:</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="name" placeholder="Display Name" ng-model="newApplet.name" required>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="icon">Icon:</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="icon" placeholder="Icon" ng-model="newApplet.icon" required>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="url">Url:</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="url" placeholder="Source Location" ng-model="newApplet.url" required>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="iconUrl">Icon Url:</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="iconUrl" placeholder="Source Location" ng-model="newApplet.iconUrl" required>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="description">Short Description:</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id=""description"" placeholder="Short Description" ng-model="newApplet.description" required>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="fullDescription">Full Description:</label>
-		    <div class="col-sm-10">
-		    	<textarea id="fullDescription" rows="3" cols="22" class="form-control" placeholder="Full Description" ng-model="newApplet.fullDescription" required></textarea>
-		    </div>
-		  </div>
-			<button type="submit" class="btn btn-primary hide" id="btnSave" ng-click="saveApplet()">Save</button>
-		</form>
+<!-- Page Heading -->
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">TraderPlus Widget Store</h1>
 	</div>
+</div>
+<!-- /.row -->
 
-  <form name="searchForm">
-    <div class="row">
-      <div class="col-xs-4 input-group">
-	  		<input type="text" id="text" class="form-control" placeholder="Search for widget..." value="" ng-model="criteria.text"/>
-	  		<span class="input-group-addon"><i class="fa fa-search"></i></span>
-      </div>
-      <a class="btn btn-primary" ng-click="searchApplet(criteria)"><i class="glyphicon glyphicon-search"></i> Search</a>
-      <a class="btn btn-primary" ng-click="addApplet()"><i class="glyphicon glyphicon-plus"></i> Upload a new widget </a>
-    </div>
-  </form>
-  
-  <form name="editForm">
-  	<div class="row">
-		  <div class="input-group">
+<div id="addAppletDiv" class="hide">
+	<form id="addApplet" class="form-horizontal" role="form">
+		<h2 class="title">Add a new widget</h2>
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="runtimeGroupId">Group:</label>
+			<div class="col-sm-9">
+				<select class="form-control" id="runtimeGroupId" placeholder="Group" value="{{newApplet.runtimeGroupId}}" ng-model="newApplet.runtimeGroupId" required>
+					<option ng-repeat="group in groups" value="{{group.id}}">{{group.name}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="displayName">Display Name:</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" id="displayName" placeholder="Display Name" value="{{newApplet.displayName}}" ng-model="newApplet.displayName" required>
+			</div>
+		</div>
+		<div class="form-group" ng-show="false">
+			<label class="control-label col-sm-3" for="runtimeIcon">Runtime Icon:</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" id="runtimeIcon" placeholder="Runtime Icon" value="fa-th" ng-model="newApplet.runtimeIcon">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="sourceLocation">Source Location:</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" id="sourceLocation" placeholder="Source Location" value="{{newApplet.sourceLocation}}" ng-model="newApplet.sourceLocation" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="iconLocation">Icon Location:</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" id="iconLocation" placeholder="Icon Location" value="{{newApplet.iconLocation}}" ng-model="newApplet.iconLocation" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="description">Description:</label>
+			<div class="col-sm-9">
+				<textarea id="description" rows="5" cols="22" class="form-control" placeholder="Description" ng-model="newApplet.description" required>{{newApplet.description}}</textarea>
 			</div>
 		</div>
 	</form>
 </div>
+
+<div class="row">
+	<form name="searchForm">
+		<div class="col-xs-3 input-group">
+			<input type="text" id="criteria_text" class="form-control" placeholder="Search for widget..." value="" ng-model="criteria.text" />
+			<span class="input-group-addon"><i class="fa fa-search"></i></span>
+		</div>
+		<div class="input-group" style="text-align: right; float: left; width: 60px; line-height: 34px">
+			<label for="criteria_groupId">Group:</label>
+		</div>
+		<div class="col-xs-2">
+			<select id="criteria_groupId" class="form-control" ng-model="criteria.groupId">
+				<option value=""></option>
+				<option ng-repeat="group in groups" value="{{group.id}}">{{group.name}}</option>
+			</select>
+		</div>
+		<div class="col-xs-2 checkbox" style="font-weight: bold; width: 150px;">
+			<input type="checkbox" ng-model="criteria.userId" style="text-align: left">Only show mine</input>
+		</div>
+		<!-- a class="btn btn-primary" ng-click="searchApplet(criteria)"><i class="glyphicon glyphicon-search"></i> Search</a-->
+		<a class="btn btn-primary" ng-if="config.isLogged" ng-click="addApplet()"><i
+			class="glyphicon glyphicon-plus"></i> Upload a new widget </a>
+	</form>
+</div>
+<!-- /.row -->
+
+<p></p>
+<div class="content" animate-panel effect="zoomIn">
+	<form name="editForm">
+		<div class="row" ng-repeat="applet in applets | orderBy:'created':!reverse" ng-if="$index % 3 ==0">
+
+			<div class="col-lg-4" ng-if="$index+0<applets.length" ng-init="widget = applets[$index+0]">
+				<div class="panel panel-info">
+					<div class="panel-heading">{{widget.displayName}}</div>
+					<div class="panel-body">
+						<div class="row">
+						<img class="icon" src="{{widget.iconLocation}}"/>
+						<div class="info">
+							<span>appName <i class="fa fa-4 {{widget.runtimeIcon}}"></i>: {{widget.appName}}</span>
+							<span>version: {{widget.version}}</span>
+							<span>providerName: {{widget.providerName}}</span>
+						</div>
+						</div>
+						<div class="description" ng:bind="widget.description"></div>
+					</div>
+					<div class="panel-footer">{{widget.tags}}</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-4" ng-if="$index+1<applets.length" ng-init="widget = applets[$index+1]">
+				<div class="panel panel-info">
+					<div class="panel-heading">{{widget.displayName}}</div>
+					<div class="panel-body">
+						<div class="row">
+						<img class="icon" src="{{widget.iconLocation}}"/>
+						<div class="info">
+							<span>appName <i class="fa fa-4 {{widget.runtimeIcon}}"></i>: {{widget.appName}}</span>
+							<span>version: {{widget.version}}</span>
+							<span>providerName: {{widget.providerName}}</span>
+						</div>
+						</div>
+						<div class="description" ng:bind="widget.description"></div>
+					</div>
+					<div class="panel-footer">{{widget.tags}}</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4" ng-if="$index+2<applets.length" ng-init="widget = applets[$index+2]">
+				<div class="panel panel-info">
+					<div class="panel-heading">{{widget.displayName}}</div>
+					<div class="panel-body">
+						<div class="row">
+						<img class="icon" src="{{widget.iconLocation}}"/>
+						<div class="info">
+							<span>appName <i class="fa fa-4 {{widget.runtimeIcon}}"></i>: {{widget.appName}}</span>
+							<span>version: {{widget.version}}</span>
+							<span>providerName: {{widget.providerName}}</span>
+						</div>
+						</div>
+						<div class="description" ng:bind="widget.description"></div>
+					</div>
+					<div class="panel-footer">{{widget.tags}}</div>
+				</div>
+			</div>
+
+		</div>
+	</form>
+</div>
+

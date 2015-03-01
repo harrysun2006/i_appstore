@@ -34,7 +34,7 @@ var userIsAuthenticated = auth.userIsAuthenticated;;
 var userIsAutorized = auth.userIsAutorized;
 
 api.all('*', function(req, res, next) {
-  res.set('Access-Control-Allow-Origin', 'http://localhost:81');
+  res.set('Access-Control-Allow-Origin', 'http://au03-hsun-pc1:81');
   res.set('Access-Control-Allow-Credentials', true);
   res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
   res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
@@ -54,8 +54,8 @@ api.put('/profile', userIsAuthenticated, routes.user.update);
 api.get('/logout', userIsAuthenticated, auth.logout);
 api.post('/about', routes.public.about);
 
-api.get('/applet', userIsAuthenticated, routes.applet.list);
-api.post('/applet-search', userIsAuthenticated, routes.applet.search);
+api.get('/applet', routes.applet.list);
+api.post('/applet-search', routes.applet.search);
 api.post('/applet', userIsAuthenticated, routes.applet.create);
 api.put('/applet/:id', userIsAuthenticated, routes.applet.update);
 api.delete('/applet/:id', userIsAuthenticated, routes.applet.delete);
@@ -74,7 +74,7 @@ web.set('view engine', 'html');
 web.use(bodyParser.json());
 web.use(bodyParser.urlencoded({extended: true}));
 // web.use(morgan('dev')); // combined
-web.use(favicon(__dirname + '/../app/favicon.ico'));
+web.use(favicon(__dirname + '/../app/iress.ico'));
 web.use(express.static(path.join(__dirname + '/..', 'app')));
 http.createServer(web).listen(web.get('port'), function() {
   console.log('Web server listening on port %d', web.get('port'));

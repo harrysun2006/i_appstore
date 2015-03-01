@@ -35,7 +35,7 @@ app.factory('ConfigService', [ '$rootScope', '$location', '$window', '$cookieSto
   var _token = (_user != null) ? _user._token : null;
   // console.log(_user, _token);
   var config = {
-    baseUrl : 'http://localhost:3000/',
+    baseUrl : 'http://au03-hsun-pc1:3000/',
     dateFormat : 'DD/MM/YYYY',
     timeFormat : 'hh:mm:ss A',
     dateTimeFormat : 'DD/MM/YYYY hh:mm:ss A',
@@ -270,7 +270,7 @@ app.config([ '$routeProvider', function($routeProvider) {
   }).when('/applet', {
     templateUrl : 'partials/applet-list.html',
     controller : 'AppletCtrl',
-    access : { requiredLogin : true }
+    access : { requiredLogin : false }
   }).otherwise({
     redirectTo : '/login',
     access : { requiredLogin : false }

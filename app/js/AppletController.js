@@ -1,8 +1,33 @@
 appControllers.controller('AppletCtrl', ['$scope', '$http', '$q', 'ConfigService',
 	function AppletCtrl($scope, $http, $q, config) {
+    $scope.groups = [
+      {id: 'MD', name: 'Market Data'},
+      {id: 'Trd', name: 'Trading'},
+      {id: 'AM', name: 'Asset Management'},
+      {id: 'SA', name: 'Security Analysis'},
+      {id: 'Op', name: 'Options'},
+      {id: 'War', name: 'Warrants'},
+      {id: 'MA', name: 'Market Analysis'},
+      {id: 'Med', name: 'Media'},
+      {id: 'Tic', name: 'Tickers'},
+      {id: 'Com', name: 'Communication'},
+      {id: 'Ast', name: 'Assistance'},
+      {id: 'clr', name: 'Colour Widgets'},
+      {id: 'Oth', name: 'Other'}
+      ];
 		$scope.applets = [];
 		$scope.user = config.user();
-		$scope.newApplet = {};
+		var genApplet = function() {
+		  var randomNumber = Math.floor(Math.random()*500);
+	    $scope.newApplet = {
+	        runtimeGroupId: "MD",
+	        displayName: "External Development Test " + randomNumber,
+	        iconLocation: "https://au03-pli-pc1/ExternalTraderPlusWidget/Content/ires_logo.png",
+	        sourceLocation: "https://au03-pli-pc1/ExternalTraderPlusWidgets2/AdvancedQuoteWidget.html",
+	        description: "External Development Test " + randomNumber
+	    };		  
+		};
+		genApplet();
 		$scope.criteria = {};
 		$scope.count = 0;
 		$('.bootstrap-datetimepicker').datetimepicker(config.datePickerOption);
@@ -32,7 +57,7 @@ appControllers.controller('AppletCtrl', ['$scope', '$http', '$q', 'ConfigService
     };
 
     $scope.listApplet = function() {
-      $http.get(config.baseUrl + 'applet', {withCredentials: true}).success(function(data, status) {
+      $http.get(config.baseUrl + 'applet', {withCredentials: false}).success(function(data, status) {
         $scope.applets = data;
         refresh(false);
       }).error(function(error, status) {
@@ -46,7 +71,7 @@ appControllers.controller('AppletCtrl', ['$scope', '$http', '$q', 'ConfigService
       });
 
       // Search applet
-      $http.post(config.baseUrl + 'applet-search', c, {withCredentials: true}).success(function(results) {
+      $http.post(config.baseUrl + 'applet-search', c, {withCredentials: false}).success(function(results) {
         $scope.applets = results;
         refresh();
       }).error(function(error, status) {
@@ -65,7 +90,6 @@ appControllers.controller('AppletCtrl', ['$scope', '$http', '$q', 'ConfigService
     };
 
     $scope.addApplet = function() {
-      $scope.newApplet = {};
       var box = bootbox.dialog({
         // TODO: ng-model is not binded to this dynamic form
         message : $('#addAppletDiv').html(),
@@ -92,15 +116,14 @@ appControllers.controller('AppletCtrl', ['$scope', '$http', '$q', 'ConfigService
     };
     
     $scope.saveApplet = function(e) {
-      var ne = $.extend({
-        group: $('.bootbox-body #addApplet #group').val(),
-        name: $('.bootbox-body #addApplet #name').val(),
-        icon: $('.bootbox-body #addApplet #icon').val(),
-        url: $('.bootbox-body #addApplet #url').val(),
-        iconUrl: $('.bootbox-body #addApplet #iconUrl').val(),
+      var ne = $.extend($scope.newApplet, {
+        displayName: $('.bootbox-body #addApplet #displayName').val(),
+        iconLocation: $('.bootbox-body #addApplet #iconLocation').val(),
+        sourceLocation: $('.bootbox-body #addApplet #sourceLocation').val(),
+        runtimeGroupId: $('.bootbox-body #addApplet #runtimeGroupId').val(),
+        runtimeIcon: $('.bootbox-body #addApplet #runtimeIcon').val(),
         description: $('.bootbox-body #addApplet #description').val()
-        fullDescription: $('.bootbox-body #addApplet #fullDescription').val()
-      }, $scope.newApplet);
+      });
       console.log('saveApplet', ne);
       var error = $.validator.checkApplet(ne);
       if (error) {
@@ -116,6 +139,7 @@ appControllers.controller('AppletCtrl', ['$scope', '$http', '$q', 'ConfigService
       }).error(function(error, status) {
         config.error(error);
       });
+      genApplet();
     };
 
     $scope.editApplet = function(applet) {

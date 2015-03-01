@@ -16,7 +16,7 @@ var writeInfo = function() {
       sourceLocation: 'https://localhost/ExternalTraderPlusWidget/'
   };
   var store = '\\\\AU03-PLI-PC1\\TraderPlus$\\';
-  var text = JSON.stringify(info, null, 4);
+  var text = JSON.stringify(info, null, 2);
   name = name.replace(/ /g, '');
   var dir = path.join(store + '\\AppStore\\Apps\\', name);
   if (!fs.existsSync(dir)) {
